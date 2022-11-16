@@ -10,14 +10,18 @@ class AlarmItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final alarm = Provider.of<Alarm>(context, listen: false);
-
+    var hour = alarm.time1.elementAt(0);
+    var minute = alarm.time1.elementAt(1);
     return ClipRRect(
       child: GridTile(
         child: GestureDetector(
           onTap: () {},
+          //child: Container(color: Colors.blue),
+          child: Text('$hour:$minute'),
         ),
       ),
     );
+
     return Container();
   }
 }

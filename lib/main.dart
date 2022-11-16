@@ -6,6 +6,8 @@ import 'screens/homeScreen.dart';
 import 'screens/loginScreen.dart';
 import 'screens/registerScreen.dart';
 import 'mockData/userData.dart';
+import 'provider/alarm.dart';
+import 'provider/alarms.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,6 +23,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: UserData(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Alarms(),
         ),
       ],
       child: MaterialApp(

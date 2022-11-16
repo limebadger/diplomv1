@@ -5,7 +5,7 @@ import '../widgets/appbarDrawer.dart';
 import '../provider/userLogin.dart';
 import 'loginScreen.dart';
 import '../widgets/dataGridview1.dart';
-//import '../widgets/alarmGrid.dart';
+import '../widgets/alarmGrid.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> _widgetOptions = <Widget>[
     /* Funktioniert nicht???? wegen const, AlarmGrid() ist nicht const */
     //List<Widget> _widgetOptions = <Widget>[
     Text(
@@ -28,11 +28,11 @@ class _HomeScreenState extends State<HomeScreen> {
       style: optionStyle,
     ),
     DataGridview1(),
-    //AlarmGrid(),
-    Text(
+    AlarmGrid(),
+    /* Text(
       'Index 2',
       style: optionStyle,
-    ),
+    ), */
     Text(
       'Index 3',
       style: optionStyle,
