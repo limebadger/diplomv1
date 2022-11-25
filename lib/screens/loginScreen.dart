@@ -24,7 +24,7 @@ class _LoginPage extends State<LoginScreen> {
   var _password = TextEditingController();
 
   startLogin() async {
-    String apiurl = "http://192.168.27.169:8080/login/read.php"; //api url
+    String apiurl = "http://sleepanalyzer.dns.army/read.php"; //api url
     //dont use http://localhost , because emulator don't get that address
     //insted use your local IP address or use live URL
     //hit "ipconfig" in windows or "ip a" in linux to get you local IP
@@ -32,8 +32,8 @@ class _LoginPage extends State<LoginScreen> {
     print(password);
 
     var response = await http.post(Uri.parse(apiurl), body: {
-      'username': username, //get the username text
-      'password': password //get password text
+      'us_name': username, //get the username text
+      'us_password': password //get password text
     });
     print("var response = await ");
     if (response.statusCode == 200) {
