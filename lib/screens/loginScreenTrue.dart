@@ -144,8 +144,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               TextButton(
                                 onPressed: () {
-                                  Navigator.of(context)
-                                      .pushNamed(RegisterScreen.routeName);
+                                  /* Navigator.of(context)
+                                      .pushNamed(RegisterScreen.routeName); */
                                 },
                                 child: Text(
                                   'Sign Up',

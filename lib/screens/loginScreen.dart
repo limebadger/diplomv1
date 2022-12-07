@@ -1,11 +1,13 @@
 import 'dart:convert';
-
+import 'package:diplomv1/screens/registerScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+
 import 'homeScreen.dart';
-//import http package manually
+import 'registerScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -24,10 +26,7 @@ class _LoginPage extends State<LoginScreen> {
   var _password = TextEditingController();
 
   startLogin() async {
-    String apiurl = "http://sleepanalyzer.dns.army/read.php"; //api url
-    //dont use http://localhost , because emulator don't get that address
-    //insted use your local IP address or use live URL
-    //hit "ipconfig" in windows or "ip a" in linux to get you local IP
+    String apiurl = "http://sleepanalyzer.dns.army/read.php";
     print(username);
     print(password);
 
@@ -55,13 +54,6 @@ class _LoginPage extends State<LoginScreen> {
             error = false;
             showprogress = false;
           });
-          //save the data returned from server
-          //and navigate to home page
-          /*  String uid = jsondata["uid"];
-          String fullname = jsondata["fullname"];
-          String address = jsondata["address"];
-          print(fullname); */
-          //user shared preference to save data
           Navigator.of(context).pushNamed(HomeScreen.routeName);
         } else {
           showprogress = false; //don't show progress indicator
@@ -112,10 +104,10 @@ class _LoginPage extends State<LoginScreen> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Colors.orange,
-              Colors.deepOrangeAccent,
-              Colors.red,
-              Colors.redAccent,
+              Colors.indigo.shade100,
+              Colors.blue.shade100,
+              Colors.teal.shade200,
+              Colors.green.shade200,
             ],
           ),
         ), //show linear gradient background of page
@@ -123,21 +115,14 @@ class _LoginPage extends State<LoginScreen> {
         padding: EdgeInsets.all(20),
         child: Column(children: <Widget>[
           Container(
-            margin: EdgeInsets.only(top: 80),
+            margin: EdgeInsets.only(top: 100),
             child: Text(
-              "Sign Into System",
+              "Welcome back!",
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold),
+                color: Colors.white,
+                fontSize: 40,
+              ),
             ), //title text
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 10),
-            child: Text(
-              "Sign In using Email and Password",
-              style: TextStyle(color: Colors.white, fontSize: 15),
-            ), //subtitle text
           ),
           Container(
             //show error message here
@@ -152,7 +137,7 @@ class _LoginPage extends State<LoginScreen> {
             margin: EdgeInsets.only(top: 10),
             child: TextField(
               controller: _username, //set username controller
-              style: TextStyle(color: Colors.orange[100], fontSize: 20),
+              style: TextStyle(color: Colors.black, fontSize: 20),
               decoration: myInputDecoration(
                 label: "Username",
                 icon: Icons.person,
@@ -167,7 +152,7 @@ class _LoginPage extends State<LoginScreen> {
             padding: EdgeInsets.all(10),
             child: TextField(
               controller: _password, //set password controller
-              style: TextStyle(color: Colors.orange[100], fontSize: 20),
+              style: TextStyle(color: Colors.black, fontSize: 20),
               obscureText: true,
               decoration: myInputDecoration(
                 label: "Password",
@@ -223,10 +208,10 @@ class _LoginPage extends State<LoginScreen> {
             margin: EdgeInsets.only(top: 20),
             child: InkResponse(
                 onTap: () {
-                  //action on tap
+                  Navigator.of(context).pushNamed(RegisterScreen.routeName);
                 },
                 child: Text(
-                  "Forgot Password? Troubleshoot",
+                  "No Account? Register",
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 )),
           )
@@ -240,12 +225,12 @@ class _LoginPage extends State<LoginScreen> {
     return InputDecoration(
       hintText: label, //show label as placeholder
       hintStyle:
-          TextStyle(color: Colors.orange[100], fontSize: 20), //hint text style
+          TextStyle(color: Colors.black38, fontSize: 20), //hint text style
       prefixIcon: Padding(
           padding: EdgeInsets.only(left: 20, right: 10),
           child: Icon(
             icon,
-            color: Colors.orange[100],
+            color: Colors.black38,
           )
           //padding and icon for prefix
           ),
@@ -254,14 +239,14 @@ class _LoginPage extends State<LoginScreen> {
       enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(
-              color: Colors.orange, width: 1)), //default border of input
+              color: Colors.black54, width: 1)), //default border of input
 
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
           borderSide:
-              BorderSide(color: Colors.orange, width: 1)), //focus border
+              BorderSide(color: Colors.black54, width: 1)), //focus border
 
-      fillColor: Color.fromRGBO(251, 140, 0, 0.5),
+      fillColor: Colors.white54,
       filled: true, //set true if you want to show input background
     );
   }
