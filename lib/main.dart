@@ -1,3 +1,5 @@
+import 'package:diplomv1/provider/chartSampleData.dart';
+import 'package:diplomv1/provider/charts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +28,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: Alarms(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Charts(),
         ),
       ],
       child: MaterialApp(

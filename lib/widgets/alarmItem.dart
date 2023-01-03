@@ -21,7 +21,5 @@ class AlarmItem extends StatelessWidget {
         ),
       ),
     );
-
-    return Container();
   }
 }

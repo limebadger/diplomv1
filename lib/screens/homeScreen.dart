@@ -6,6 +6,8 @@ import '../provider/userLogin.dart';
 import 'loginScreen.dart';
 import '../widgets/dataGridview1.dart';
 import '../widgets/alarmGrid.dart';
+import '../widgets/chartGrid.dart';
+import '../provider/charts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,7 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
       'Index 0',
       style: optionStyle,
     ),
-    DataGridview1(),
+    //DataGridview1(),
+    ChartGrid(),
     AlarmGrid(),
     /* Text(
       'Index 2',
@@ -52,6 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final userLogin = Provider.of<UserLogin>(context);
+    /* final charts = Provider.of<Charts>(context);
+    charts.fetchData(); */
     /* doesn't work! (maybe because loggedIn wasn't changed?): 
     if (userLogin.loggedIn == false) {
       Navigator.of(context).pushNamed(LoginScreen.routeName);
