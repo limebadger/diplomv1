@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import 'homeScreen.dart';
 import 'registerScreen.dart';
+import '../provider/userLogin.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -29,6 +30,7 @@ class _LoginPage extends State<LoginScreen> {
     String apiurl = "http://sleepanalyzer.dns.army/read.php";
     print(username);
     print(password);
+    final userLogin = Provider.of<UserLogin>(context);
 
     var response = await http.post(Uri.parse(apiurl), body: {
       'us_name': username, //get the username text
@@ -55,6 +57,7 @@ class _LoginPage extends State<LoginScreen> {
             showprogress = false;
           });
           Navigator.of(context).pushNamed(HomeScreen.routeName);
+          userLogin.setUserID(jsondata["userID"]);
         } else {
           showprogress = false; //don't show progress indicator
           error = true;
@@ -85,6 +88,10 @@ class _LoginPage extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userLogin = Provider.of<UserLogin>(context);
+    if (userLogin.getUserID > 0) {
+      Navigator.of(context).pushNamed(HomeScreen.routeName);
+    }
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent
             //color set to transperent or set your own color

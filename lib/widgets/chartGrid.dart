@@ -20,7 +20,7 @@ class _ChartGridState extends State<ChartGrid> {
     return Stack(
       children: <Widget>[
         FutureBuilder(
-            future: charts.fetchData(),
+            future: charts.fetchData(context),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               return GridView.builder(
                 padding: const EdgeInsets.all(10.0),

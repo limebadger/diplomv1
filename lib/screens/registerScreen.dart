@@ -52,7 +52,7 @@ class _LoginPage extends State<RegisterScreen> {
             error = false;
             showprogress = false;
           });
-          Navigator.of(context).pushNamed(HomeScreen.routeName);
+          Navigator.of(context).pushNamed(LoginScreen.routeName);
         } else {
           showprogress = false; //don't show progress indicator
           error = true;

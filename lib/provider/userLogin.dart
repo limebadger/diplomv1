@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:get_storage/get_storage.dart';
 
 class UserLogin with ChangeNotifier {
-  var _loggedIn = false;
-  var _userName = "";
-  var _pw = "";
+  final userData = GetStorage();
 
-  bool get loggedIn {
-    return _loggedIn;
+  void setUserID(int userID) {
+    userData.write('userID', userID);
   }
 
-  void logInOut(bool loginBool) {
-    _loggedIn = loginBool;
-    notifyListeners();
+  int get getUserID {
+    return userData.read('userID');
   }
 
-  void setUserCreds(String userName, String pw) {
-    _userName = userName;
-    _pw = pw;
+  void userLogout() {
+    userData.write('userID', 0);
   }
 }

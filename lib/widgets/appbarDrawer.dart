@@ -36,7 +36,6 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
               leading: Icon(Icons.logout),
               title: Text('Logout'),
               onTap: () {
-                Provider.of<UserLogin>(context, listen: false).logInOut(false);
                 Navigator.of(context).pushNamed(LoginScreen.routeName);
               }),
           /* ListTile(
