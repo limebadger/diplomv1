@@ -27,10 +27,12 @@ class _LoginPage extends State<LoginScreen> {
   var _password = TextEditingController();
 
   startLogin() async {
+    print(
+        "----------------------------------try get data------------------------");
     String apiurl = "http://sleepanalyzer.dns.army/read.php";
     print(username);
     print(password);
-    final userLogin = Provider.of<UserLogin>(context);
+    final userLogin = Provider.of<UserLogin>(context, listen: false);
 
     var response = await http.post(Uri.parse(apiurl), body: {
       'us_name': username, //get the username text
@@ -57,7 +59,10 @@ class _LoginPage extends State<LoginScreen> {
             showprogress = false;
           });
           Navigator.of(context).pushNamed(HomeScreen.routeName);
-          userLogin.setUserID(jsondata["userID"]);
+          userLogin.setUserID(int.parse(jsondata["userID"]));
+          print(
+              "===========================hold up===============================");
+          print(userLogin.getUserID);
         } else {
           showprogress = false; //don't show progress indicator
           error = true;
@@ -75,11 +80,20 @@ class _LoginPage extends State<LoginScreen> {
 
   @override
   void initState() {
+    final userLogin = Provider.of<UserLogin>(context, listen: false);
+    //final userLogin2 = Provider.of<UserLogin>(context);
     username = "";
     password = "";
     errormsg = "";
     error = false;
     showprogress = false;
+
+    /* if (userLogin.getUserID != 0) {
+      Navigator.of(context).pushNamed(HomeScreen.routeName);
+    } */
+
+    print("Your are in initState!");
+    print(userLogin.getUserID);
 
     //_username.text = "defaulttext";
     //_password.text = "defaultpassword";
@@ -88,10 +102,15 @@ class _LoginPage extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final userLogin = Provider.of<UserLogin>(context);
-    if (userLogin.getUserID > 0) {
-      Navigator.of(context).pushNamed(HomeScreen.routeName);
+    final userLogin = Provider.of<UserLogin>(context, listen: false);
+    if (userLogin.getUserID != 0) {
+      Future.delayed(Duration.zero, () {
+        Navigator.of(context).pushNamed(HomeScreen.routeName);
+        print("you're logged in");
+      });
     }
+    print(
+        "-------------------------------------hallo--------------------------------------");
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent
             //color set to transperent or set your own color

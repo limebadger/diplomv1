@@ -40,8 +40,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'SleepAnalyzer',
-        home: HomeScreen(),
-        //home: LoginScreen(),
+        //home: HomeScreen(),
+        home: LoginScreen(),
         routes: {
           LoginScreen.routeName: (ctx) => LoginScreen(),
           RegisterScreen.routeName: (ctx) => RegisterScreen(),

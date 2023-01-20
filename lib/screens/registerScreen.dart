@@ -52,7 +52,10 @@ class _LoginPage extends State<RegisterScreen> {
             error = false;
             showprogress = false;
           });
-          Navigator.of(context).pushNamed(LoginScreen.routeName);
+
+          if (mounted) {
+            Navigator.of(context).pushNamed(LoginScreen.routeName);
+          }
         } else {
           showprogress = false; //don't show progress indicator
           error = true;
@@ -115,7 +118,7 @@ class _LoginPage extends State<RegisterScreen> {
           Container(
             margin: EdgeInsets.only(top: 100),
             child: Text(
-              "Welcome back!",
+              "Sign up :)",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 40,

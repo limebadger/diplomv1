@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../provider/userLogin.dart';
 import '../screens/loginScreen.dart';
+import '../provider/userLogin.dart';
 
 class AppbarDrawer extends StatefulWidget {
   const AppbarDrawer({super.key});
@@ -16,6 +17,7 @@ class AppbarDrawer extends StatefulWidget {
 class _AppbarDrawerState extends State<AppbarDrawer> {
   @override
   Widget build(BuildContext context) {
+    var userLogin = Provider.of<UserLogin>(context, listen: false);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -36,6 +38,7 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
               leading: Icon(Icons.logout),
               title: Text('Logout'),
               onTap: () {
+                userLogin.userLogout();
                 Navigator.of(context).pushNamed(LoginScreen.routeName);
               }),
           /* ListTile(

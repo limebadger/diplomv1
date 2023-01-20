@@ -10,7 +10,12 @@ class UserLogin with ChangeNotifier {
   }
 
   int get getUserID {
-    return userData.read('userID');
+    //userData.getKeys();
+    if (userData.read('userID') != null) {
+      return userData.read('userID');
+    } else {
+      return 0;
+    }
   }
 
   void userLogout() {

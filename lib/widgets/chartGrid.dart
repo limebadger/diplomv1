@@ -20,20 +20,34 @@ class _ChartGridState extends State<ChartGrid> {
     return Stack(
       children: <Widget>[
         FutureBuilder(
-            future: charts.fetchData(context),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              return GridView.builder(
-                padding: const EdgeInsets.all(10.0),
-                itemCount: charts.length,
-                itemBuilder: (context, index) => ChartItem(index: index),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1,
-                  childAspectRatio: 1,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-              );
-            }),
+          future: charts.fetchData(context),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            print(snapshot.connectionState);
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return const Text('Error');
+              } else {
+                return GridView.builder(
+                  padding: const EdgeInsets.all(10.0),
+                  itemCount: charts.length,
+                  itemBuilder: (context, index) => ChartItem(index: index),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    childAspectRatio: 1,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                );
+              } /* else {
+                return const Text('Empty data');
+              } */
+            } else {
+              return Text('State: ${snapshot.connectionState}');
+            }
+          },
+        ),
       ],
     );
   }
