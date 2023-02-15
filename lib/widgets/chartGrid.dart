@@ -33,7 +33,7 @@ class _ChartGridState extends State<ChartGrid> {
                   padding: const EdgeInsets.all(10.0),
                   itemCount: charts.length,
                   itemBuilder: (context, index) => ChartItem(index: index),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 1,
                     childAspectRatio: 1,
                     crossAxisSpacing: 10,

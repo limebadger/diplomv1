@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../widgets/alarmGrid.dart';
 import 'alarm.dart';
 
 class Alarms with ChangeNotifier {
+  final ringTimes = GetStorage();
+
   List<Alarm> _items = [
     Alarm(
-      time1: [12, 12],
-      time2: [1, 1],
+      ringTime: [12, 12],
     ),
     Alarm(
-      time1: [13, 12],
-      time2: [1, 1],
+      ringTime: [13, 12],
     ),
   ];
 
@@ -28,11 +29,11 @@ class Alarms with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   } */
 
-  void addAlarm(var result) {
+  void addAlarm(var selTime) {
     print("alarms hello");
-    print(result);
-    List<int> _time1 = [result.hour, result.minute];
-    _items.add(Alarm(time1: _time1, time2: _time1));
+    print(selTime);
+    List<int> _time1 = [selTime.hour, selTime.minute];
+    _items.add(Alarm(ringTime: _time1));
     notifyListeners();
   }
 

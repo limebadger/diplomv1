@@ -12,16 +12,16 @@ import 'userLogin.dart';
 class Charts with ChangeNotifier {
   List<ChartSampleData> chartData = <ChartSampleData>[];
   var jsondata;
+  var proxyvar;
 
   fetchData(var context) async {
     final userLogin = Provider.of<UserLogin>(context);
     String apiurl = "http://sleepanalyzer.dns.army/get_biosignal.php";
     print("Data is fetched!!!!!");
-    var response = await http
-        .post(Uri.parse(apiurl), body: {'us_id': userLogin.getUserID});
-    print("Your in fetchData, Yey!");
-    //print(userLogin.getUserID);
-    //var response = await http.post(Uri.parse(apiurl), body: {'us_id': '2'});
+    proxyvar = userLogin.getUserID.toString();
+    var response =
+        await http.post(Uri.parse(apiurl), body: {'us_id': proxyvar});
+    print("response.body");
     if (response.statusCode == 200) {
       jsondata = json.jsonDecode(response.body);
       print(jsondata);
