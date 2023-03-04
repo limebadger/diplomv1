@@ -3,17 +3,19 @@ import 'package:diplomv1/provider/charts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:alarm/alarm.dart';
 
 import 'provider/userLogin.dart';
 import 'screens/homeScreen.dart';
 import 'screens/loginScreen.dart';
 import 'screens/registerScreen.dart';
 import 'mockData/userData.dart';
-import 'provider/alarm.dart';
+import 'provider/myAlarm.dart';
 import 'provider/alarms.dart';
 
 void main() async {
   await GetStorage.init();
+  await Alarm.init();
   runApp(const MyApp());
 }
 

@@ -1,4 +1,4 @@
-import 'package:diplomv1/provider/alarm.dart';
+import 'package:diplomv1/provider/myAlarm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +41,12 @@ class _AlarmGridState extends State<AlarmGrid> {
           },
         );
       }
+    }
+
+    @override
+    void initState() {
+      final alarms = Provider.of<Alarms>(context, listen: false);
+      alarms.initAlarmsFuture();
     }
 
     return Stack(

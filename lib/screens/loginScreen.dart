@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'homeScreen.dart';
 import 'registerScreen.dart';
 import '../provider/userLogin.dart';
+import '../provider/alarms.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -81,6 +82,9 @@ class _LoginPage extends State<LoginScreen> {
   @override
   void initState() {
     final userLogin = Provider.of<UserLogin>(context, listen: false);
+    final alarms = Provider.of<Alarms>(context, listen: false);
+
+    alarms.initAlarms();
     //final userLogin2 = Provider.of<UserLogin>(context);
     username = "";
     password = "";
