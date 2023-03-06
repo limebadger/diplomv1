@@ -49,6 +49,9 @@ class MyApp extends StatelessWidget {
           RegisterScreen.routeName: (ctx) => RegisterScreen(),
           HomeScreen.routeName: (ctx) => HomeScreen(),
         },
+        theme: ThemeData(
+          brightness: Brightness.dark,
+        ),
       ),
     );
   }

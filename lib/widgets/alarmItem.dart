@@ -19,21 +19,45 @@ class _AlarmItemState extends State<AlarmItem> {
   Widget build(BuildContext context) {
     final alarm = Provider.of<MyAlarm>(context, listen: false);
     final alarms = Provider.of<Alarms>(context, listen: false);
-    var hour = alarm.ringTime;
+    var time = alarm.ringTime;
+    var timeStr = time.toString();
     var ringTimeIO = alarm.ringTimeIO;
+    var hour;
+    var minute;
+    var finalTime;
+    var timeToRemove;
+
+    if (timeStr.length == 4) {
+      hour = timeStr[0] + timeStr[1];
+      minute = timeStr[2] + timeStr[3];
+      finalTime = hour + ":" + minute;
+      timeToRemove = hour + minute;
+    } else if (timeStr.length == 3) {
+      hour = "0" + timeStr[0];
+      minute = timeStr[1] + timeStr[2];
+      finalTime = hour + ":" + minute;
+      timeToRemove = hour + minute;
+    }
+
     return ClipRRect(
       child: GridTile(
         child: Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            color: const Color(0x88000000),
+          ),
           child: Row(
             children: <Widget>[
-              Text('$hour'),
+              Text('                  '),
+              Text(finalTime,
+                  style: TextStyle(color: Colors.white, fontSize: 25)),
               Spacer(),
               IconButton(
                 icon: const Icon(Icons.delete),
                 tooltip: 'Increase volume by 10',
                 onPressed: () {
                   setState(() {
-                    alarms.removeAlarm('$hour');
+                    alarms.removeAlarm(timeToRemove);
                   });
                 },
               ),
@@ -45,7 +69,7 @@ class _AlarmItemState extends State<AlarmItem> {
                   // This is called when the user toggles the switch.
                   setState(() {
                     ringTimeIO = value;
-                    alarms.toggleAlarm(hour, context);
+                    alarms.toggleAlarm(time, context);
                   });
                 },
               ),

@@ -38,13 +38,15 @@ class Alarms with ChangeNotifier {
   void initAlarms() {
     print('hello hihi');
     if (ringTimes.read('userID') != null) {
-      ringTimes.write('9999', '9999');
+      //ringTimes.write('9999', '9999');
       var values = ringTimes.getKeys();
       items.clear();
       if (items.isEmpty) {
         for (var i = 0; i < values.length; i++) {
-          if (values.elementAt(i) != 'userID' &&
-              values.elementAt(i) != '9999') {
+          if (values.elementAt(i) !=
+                  'userID' /*  &&
+              values.elementAt(i) != '9999'*/
+              ) {
             var timeInt = int.parse(values.elementAt(i));
             items.add(MyAlarm(
                 ringTime: timeInt,
@@ -57,8 +59,8 @@ class Alarms with ChangeNotifier {
         });
       }
     } else
-      (ringTimes.write('9999', '9999'));
-    notifyListeners();
+      //(ringTimes.write('9999', '9999'));
+      notifyListeners();
   }
 
   void addAlarm(var selTime) {
@@ -147,22 +149,23 @@ class Alarms with ChangeNotifier {
 
     var now = DateTime.now();
     var hourStr = hour.toString();
+    hourStr = checkIf2(hourStr);
     var minuteStr = minute.toString();
+    minuteStr = checkIf2(minuteStr);
     var yearStr = now.year.toString();
     var monthStr = now.month.toString();
+    monthStr = checkIf2(monthStr);
     var dayStr = now.day.toString();
+    dayStr = checkIf2(dayStr);
     var secondStr = "00";
 
     var buffer = yearStr +
         "-" +
-        //monthStr +
-        "03" +
+        monthStr +
         "-" +
-        //dayStr +
-        "03" +
+        dayStr +
         " " +
-        //hourStr +
-        "09" +
+        hourStr +
         ":" +
         minuteStr +
         ":" +
@@ -172,9 +175,11 @@ class Alarms with ChangeNotifier {
     print(buffer);
     timeFormat = DateTime.parse(buffer);
 
-    if (timeFormat.isBefore(DateTime.now())) {
-      timeFormat.day += 1;
-    }
+    print("This is ringday Function result:");
+    print(ringDay(timeFormat));
+
+    if (ringDay(timeFormat) == 'tomorrow')
+      timeFormat = timeFormat.add(const Duration(days: 1));
 
     var alarmSettings = AlarmSettings(
       dateTime: timeFormat,
@@ -206,6 +211,33 @@ class Alarms with ChangeNotifier {
       }
     } */
     Alarm.ringStream.stream.listen((_) => alarmPopUp(context));
+  }
+
+  String ringDay(selectedTime) {
+    final now = TimeOfDay.now();
+
+    if (selectedTime!.hour > now.hour) return 'today';
+    if (selectedTime!.hour < now.hour) return 'tomorrow';
+
+    if (selectedTime!.minute > now.minute) return 'today';
+    if (selectedTime!.minute < now.minute) return 'tomorrow';
+
+    return 'tomorrow';
+  }
+
+  String checkIf2(String buffer1) {
+    String buffer2 = "";
+    if (buffer1.length == 0) {
+      buffer2 = "00";
+    } else if (buffer1.length == 1) {
+      buffer2 = "0" + buffer1;
+    } else if (buffer1.length == 2) {
+      buffer2 = buffer1;
+    } else {
+      print("There is something wrong:");
+      print(buffer1);
+    }
+    return buffer2;
   }
 
   Future<void> alarmPopUp(context) async {

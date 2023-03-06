@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+//this is the right version!!!!!!
+
 import '../provider/alarms.dart';
 import 'alarmItem.dart';
 import 'pickTime.dart';
@@ -43,39 +45,70 @@ class _AlarmGridState extends State<AlarmGrid> {
       }
     }
 
-    @override
+/*     @override
     void initState() {
       final alarms = Provider.of<Alarms>(context, listen: false);
       alarms.initAlarmsFuture();
-    }
+    } */
 
     return Stack(
       children: <Widget>[
-        GridView.builder(
-          padding: const EdgeInsets.all(10.0),
-          itemCount: alarms.length,
-          itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-            value: alarms[i],
-            child: AlarmItem(),
-          ),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1,
-            childAspectRatio: 6 / 1,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),
-        ),
-        Positioned(
-          right: 15,
-          bottom: 15,
-          child: FloatingActionButton(
-            onPressed: () => _show(),
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.grey,
-            child: Icon(Icons.add),
-          ),
-          //child: Icon(Icons.add),
-          //backgroundColor: Colors.red,
+        FutureBuilder(
+          future: alarmsData.initAlarmsFuture(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            print(snapshot.connectionState);
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return Positioned(
+                  right: 15,
+                  bottom: 15,
+                  child: FloatingActionButton(
+                    onPressed: () => _show(),
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.grey,
+                    child: Icon(Icons.add),
+                  ),
+                  //child: Icon(Icons.add),
+                  //backgroundColor: Colors.red,
+                );
+              } else {
+                return Stack(children: <Widget>[
+                  GridView.builder(
+                    padding: const EdgeInsets.all(10.0),
+                    itemCount: alarms.length,
+                    itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+                      value: alarms[i],
+                      child: AlarmItem(),
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+                      childAspectRatio: 6 / 1,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                    ),
+                  ),
+                  Positioned(
+                    right: 15,
+                    bottom: 15,
+                    child: FloatingActionButton(
+                      onPressed: () => _show(),
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.grey,
+                      child: Icon(Icons.add),
+                    ),
+                    //child: Icon(Icons.add),
+                    //backgroundColor: Colors.red,
+                  ),
+                ]);
+              } /* else {
+                return const Text('Empty data');
+              } */
+            } else {
+              return Text('State: ${snapshot.connectionState}');
+            }
+          },
         ),
       ],
     );
