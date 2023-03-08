@@ -41,39 +41,43 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final userLogin = Provider.of<UserLogin>(context);
     return Container(
-      /* decoration: BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/login.png'), fit: BoxFit.cover),
-      ), */
+            image: AssetImage('assets/surreal.jpg'), fit: BoxFit.cover),
+      ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: const Text('SleepAnalyzer'),
+          backgroundColor: Colors.black54,
         ),
         drawer: AppbarDrawer(),
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          showUnselectedLabels: false,
-          unselectedItemColor: Colors.deepOrange,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart),
-              label: 'Charts',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.access_alarm),
-              label: 'Alarm',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
-          onTap: _onItemTapped,
+        bottomNavigationBar: Theme(
+          data: Theme.of(context).copyWith(canvasColor: Colors.black54),
+          child: BottomNavigationBar(
+            showUnselectedLabels: false,
+            unselectedItemColor: Colors.deepPurple,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.bar_chart),
+                label: 'Charts',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.access_alarm),
+                label: 'Alarm',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.deepPurpleAccent,
+            onTap: _onItemTapped,
+          ),
         ),
       ),
     );

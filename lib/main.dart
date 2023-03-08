@@ -50,8 +50,9 @@ class MyApp extends StatelessWidget {
           HomeScreen.routeName: (ctx) => HomeScreen(),
         },
         theme: ThemeData(
-          brightness: Brightness.dark,
-        ),
+            brightness: Brightness.dark,
+            primaryColor: Colors.black54,
+            fontFamily: 'ZTGatha'),
       ),
     );
   }
