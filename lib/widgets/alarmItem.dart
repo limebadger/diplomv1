@@ -37,6 +37,16 @@ class _AlarmItemState extends State<AlarmItem> {
       minute = timeStr[1] + timeStr[2];
       finalTime = hour + ":" + minute;
       timeToRemove = hour + minute;
+    } else if (timeStr.length == 2) {
+      hour = "00";
+      minute = timeStr[0] + timeStr[1];
+      finalTime = hour + ":" + minute;
+      timeToRemove = hour + minute;
+    } else if (timeStr.length == 1) {
+      hour = "00";
+      minute = "00";
+      finalTime = hour + ":" + minute;
+      timeToRemove = hour + minute;
     }
 
     return ClipRRect(

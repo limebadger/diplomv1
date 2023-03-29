@@ -13,11 +13,14 @@ class Alarms with ChangeNotifier {
 
   Future<int> initAlarmsFuture() async {
     var values = ringTimes.getKeys();
+    var timeInt;
     //values.removeWhere((item) => item == 'userID');
     if (items.isEmpty) {
       for (var i = 0; i < values.length; i++) {
-        var timeInt = int.parse(values.elementAt(i));
-        items.add(MyAlarm(ringTime: timeInt, ringTimeIO: true));
+        if (values.elementAt(i) != 'userID') {
+          var timeInt = int.parse(values.elementAt(i));
+          items.add(MyAlarm(ringTime: timeInt, ringTimeIO: false));
+        }
       }
 
       items.sort((a, b) {
@@ -38,7 +41,6 @@ class Alarms with ChangeNotifier {
   void initAlarms() {
     print('hello hihi');
     if (ringTimes.read('userID') != null) {
-      //ringTimes.write('9999', '9999');
       var values = ringTimes.getKeys();
       items.clear();
       if (items.isEmpty) {
@@ -75,6 +77,8 @@ class Alarms with ChangeNotifier {
     }
     if (timeStrMin.length < 2) {
       timeStrMin = "0" + timeStrMin;
+    } else if (timeStrMin.length == 0) {
+      timeStrMin = "00";
     }
 
     var timeStr = timeStrHr + timeStrMin;
@@ -82,7 +86,7 @@ class Alarms with ChangeNotifier {
     if (values.contains(timeStr)) {
       print('nothing happens');
     } else {
-      ringTimes.write(timeStr, true);
+      ringTimes.write(timeStr, false);
       print("-------------addAlarm-------------------");
       print("timeStr:");
       print(timeStr);
@@ -108,6 +112,7 @@ class Alarms with ChangeNotifier {
       buffer.ringTimeIO = false;
       ringTimes.write('$selTime', false);
       print("your in buffer.ringtTimeIO == true");
+      yourOnRingCallback();
     }
     print("Time of day:");
     print(DateTime.now());
@@ -116,6 +121,7 @@ class Alarms with ChangeNotifier {
   void erase() {
     ringTimes.erase();
     items.clear();
+    yourOnRingCallback();
   }
 
   Future<void> ringAlarm(var selTimeInt, context) async {
@@ -210,7 +216,7 @@ class Alarms with ChangeNotifier {
       }
       }
     } */
-    Alarm.ringStream.stream.listen((_) => alarmPopUp(context));
+    //Alarm.ringStream.stream.listen((_) => alarmPopUp(context, selTimeInt));
   }
 
   String ringDay(selectedTime) {
@@ -240,7 +246,7 @@ class Alarms with ChangeNotifier {
     return buffer2;
   }
 
-  Future<void> alarmPopUp(context) async {
+  Future<void> alarmPopUp(context, var selTimeInt) async {
     print("------------------------youve made it!!!---------------------");
     return showDialog<void>(
       context: context,
@@ -251,17 +257,18 @@ class Alarms with ChangeNotifier {
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
-                Text('This is a demo alert dialog.'),
-                Text('Would you like to approve of this message?'),
+                Text('This is your Alarm!'),
+                Text('Hi'),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Approve'),
+              child: const Text('Turn off'),
               onPressed: () {
                 Navigator.of(context).pop();
                 yourOnRingCallback();
+                toggleAlarm(selTimeInt, context);
               },
             ),
           ],
@@ -276,21 +283,14 @@ class Alarms with ChangeNotifier {
 
   void removeAlarm(var selTime) {
     var values = ringTimes.getKeys();
-    //values.removeWhere((item) => item == 'userID');
     print(values);
     print("Youre at ringTimes.remove");
     ringTimes.remove(selTime);
     var newValues = ringTimes.getKeys();
     print(newValues);
 
-    //items.removeWhere((item) => item.ringTime == selTime);
     initAlarms();
 
-    items.sort(
-      (a, b) {
-        return a.ringTime.compareTo(b.ringTime);
-      },
-    );
     notifyListeners();
   }
 }

@@ -34,11 +34,20 @@ class Charts with ChangeNotifier {
 
     for (var i = 0; i < jsondata[0][x].length; i++) {
       var mytime = DateTime.parse(jsondata[0][x][i]);
+      //var myVal = double.parse(jsondata[2][x][i]) / 5000 - 0.4;
       var myVal = double.parse(jsondata[2][x][i]);
 
       chartData.add(ChartSampleData(x: mytime, yValue: myVal));
     }
     return chartData;
+  }
+
+  String getTime(x) {
+    String mytime = jsondata[0][x][0];
+    //String result = mytime.split(' ');
+    print('helllooooo, splitted string:');
+    print(mytime);
+    return mytime;
   }
 
   int get length {

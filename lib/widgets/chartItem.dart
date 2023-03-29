@@ -18,28 +18,40 @@ class ChartItem extends StatelessWidget {
     print(index);
 
     var charts = Provider.of<Charts>(context, listen: false);
-    return ClipRRect(
-      child: GridTile(
-        child: GestureDetector(
-          onTap: () {},
+    var time = charts.getTime(index);
+    return Theme(
+      data: ThemeData(
+          brightness: Brightness.light,
+          primaryColor: Colors.lightGreen.shade200,
+          fontFamily: 'ZTGatha'),
+      child: ClipRRect(
+        child: GridTile(
           child: Container(
-              height: 500,
-              width: 320,
-              child: SfCartesianChart(
-                backgroundColor: Colors.white,
-                primaryXAxis: DateTimeAxis(
-                    majorGridLines: MajorGridLines(width: 0),
-                    edgeLabelPlacement: EdgeLabelPlacement.shift,
-                    intervalType: DateTimeIntervalType.auto),
-                series: <ChartSeries<ChartSampleData, DateTime>>[
-                  LineSeries<ChartSampleData, DateTime>(
-                    dataSource: charts.getData(index),
-                    xValueMapper: (ChartSampleData sales, _) => sales.x,
-                    yValueMapper: (ChartSampleData sales, _) => sales.yValue,
-                    name: 'Sales',
-                  )
-                ],
-              )),
+            height: 10000,
+            width: 500,
+            //color: Color.fromRGBO(0, 0, 0, 0.78),
+            child: SfCartesianChart(
+              backgroundColor: Colors.white,
+              borderColor: Colors.black,
+              title: ChartTitle(text: time),
+              primaryXAxis: DateTimeAxis(
+                  title: AxisTitle(text: 'Time'),
+                  majorGridLines: MajorGridLines(width: 0),
+                  edgeLabelPlacement: EdgeLabelPlacement.shift,
+                  intervalType: DateTimeIntervalType.auto),
+              primaryYAxis:
+                  NumericAxis(title: AxisTitle(text: 'Movement Intensity')),
+              series: <ChartSeries<ChartSampleData, DateTime>>[
+                LineSeries<ChartSampleData, DateTime>(
+                  dataSource: charts.getData(index),
+                  xValueMapper: (ChartSampleData sales, _) => sales.x,
+                  yValueMapper: (ChartSampleData sales, _) => sales.yValue,
+                  name: 'Sales',
+                )
+              ],
+            ),
+            //Text(time, style: const TextStyle(fontSize: 18)),
+          ),
         ),
       ),
     );

@@ -190,7 +190,7 @@ class _LoginPage extends State<RegisterScreen> {
                         ),
                       )
                     : Text(
-                        "LOGIN NOW",
+                        "REGISTER",
                         style: TextStyle(fontSize: 20),
                       ),
                 // if showprogress == true then show progress indicator

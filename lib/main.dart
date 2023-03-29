@@ -1,5 +1,6 @@
 import 'package:diplomv1/provider/chartSampleData.dart';
 import 'package:diplomv1/provider/charts.dart';
+import 'package:diplomv1/provider/darkMode.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get_storage/get_storage.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Charts(),
         ),
+        ChangeNotifierProvider.value(
+          value: DarkMode(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -49,10 +53,10 @@ class MyApp extends StatelessWidget {
           RegisterScreen.routeName: (ctx) => RegisterScreen(),
           HomeScreen.routeName: (ctx) => HomeScreen(),
         },
-        theme: ThemeData(
+        /* theme: ThemeData(
             brightness: Brightness.dark,
             primaryColor: Colors.black54,
-            fontFamily: 'ZTGatha'),
+            fontFamily: 'ZTGatha'), */
       ),
     );
   }
