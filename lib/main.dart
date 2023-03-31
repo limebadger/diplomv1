@@ -10,7 +10,6 @@ import 'provider/userLogin.dart';
 import 'screens/homeScreen.dart';
 import 'screens/loginScreen.dart';
 import 'screens/registerScreen.dart';
-import 'mockData/userData.dart';
 import 'provider/myAlarm.dart';
 import 'provider/alarms.dart';
 
@@ -29,9 +28,6 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(
           value: UserLogin(),
-        ),
-        ChangeNotifierProvider.value(
-          value: UserData(),
         ),
         ChangeNotifierProvider.value(
           value: Alarms(),
